@@ -6,8 +6,3 @@ xcuserdata/
 project.xcworkspace/
 
 xml/
-*~
-*.swp
-html/*.html
-
-!html/index.html

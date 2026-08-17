@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+
+<title>重访设计模式 &middot; 游戏设计模式</title>
+
+<!-- Tell mobile browsers we're optimized for them and they don't need to crop
+     the viewport. -->
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<!--
+delete the font style for english.
+<link href="http://fonts.gmirror.org/css?family=Merriweather:400,400italic,700,700italic|Source+Code+Pro|Source+Sans+Pro:200,300,400,600,400italic,600italic|Rock+Salt" rel="stylesheet" type="text/css">
+-->
+<!-- delete the google analyse code to improve the speed, sorry. -->
+<script src="http://apps.bdimg.com/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="script.js"></script>
+
+</head>
+<body id="top">
+
+<span class="toc">
+	<aside style="position:fixed; top:10px; left:10px;" class="index noShowOnSmallScren" name="index">
+		<h2>目录</h2>
+		<ul>
+		  <li><a href="acknowledgements.html">致谢</a>
+		  <li><a href="introduction.html">序</a>
+		    <ul>
+		      <li><a href="architecture-performance-and-games.html">架构，性能和游戏</a></li>
+		    </ul>
+		  </li>
+		  <li><a href="design-patterns-revisited.html">重访设计模式</a>
+		    <ul>
+		      <li><a href="command.html">命令模式</a></li>
+		      <li><a href="flyweight.html">享元模式</a></li>
+		      <li><a href="observer.html">观察者模式</a></li>
+		      <li><a href="prototype.html">原型模式</a></li>
+		      <li><a href="singleton.html">单例模式</a></li>
+		      <li><a href="state.html">状态模式</a></li>
+		    </ul>
+		  </li>
+		  <li><a href="sequencing-patterns.html">序列模式</a>
+		    <ul>
+		      <li><a href="double-buffer.html">双缓冲模式</a></li>
+		      <li><a href="game-loop.html">游戏循环</a></li>
+		      <li><a href="update-method.html">更新方法</a></li>
+		    </ul>
+		  </li>
+		  <li><a href="behavioral-patterns.html">行为模式</a>
+		    <ul>
+		      <li><a href="bytecode.html">字节码</a></em></li>
+		      <li><a href="subclass-sandbox.html">子类沙箱</a></li>
+		      <li><a href="type-object.html">类型对象</a></li>
+		    </ul>
+		  </li>
+		  <li><a href="decoupling-patterns.html">解耦模式</a>
+		    <ul>
+		      <li><a href="component.html">组件模式</a></li>
+		      <li><a href="event-queue.html">事件队列</a></li>
+		      <li><a href="service-locator.html">服务定位器</a></li>
+		    </ul>
+		  </li>
+		  <li><a href="optimization-patterns.html">优化模式</a>
+		    <ul>
+		      <li><a href="data-locality.html">数据局部性</a></li>
+		      <li><a href="dirty-flag.html">脏标识模式</a></li>
+		      <li><a href="object-pool.html">对象池模式</a></li>
+		      <li><a href="spatial-partition.html">空间分区</a></li>
+		    </ul>
+		  </li>
+		</ul>
+	</aside>
+  <button style="position:fixed;bottom:10px;left:10px;color:#1481b8;" onclick="RedirectToEnglishPage()">&equiv; 查看英文原文</button>
+</span>
+
+<div class="page sidebar">
+<div class="content">
+<nav class="top">
+  <span class="prev">&larr; <a href="architecture-performance-and-games.html">上一章</a></span>
+  <span class="next"><a href="command.html">下一章</a> &rarr;</span>
+  <span class="toc">&equiv; <a href="/">首页</a></span>
+</nav>
+<h1>重访设计模式</h1>
+<h1 class="book"><a href="/">游戏设计模式</a></h1>
+<p>照我算来，《设计模式：可复用面向对象软件的基础》问世已近二十年。
+除非你正从我身后偷看，否则等你读到这段文字时，《设计模式》多半已经到能喝酒的年纪了。
+对于像软件这样快速发展的行业来说，这简直就是老古董了。
+这本书的持久流行说明，与许多框架和方法论相比，设计是多么经久不衰。</p>
+<p>虽然我认为《设计模式》仍然有意义，但在过去几十年我们学到了很多。
+在这一部分，我们会逐一过一遍GoF记载的少数几个原始模式。
+对于每个模式，我希望能讲些有用有趣的东西。</p>
+<p>我认为有些模式被过度使用了（<a href="singleton.html">单例模式</a>），
+而另一些则被低估了（<a href="command.html">命令模式</a>）。
+有一两个模式放在这里，是因为我想探索它们与游戏的特殊关联（<a href="flyweight.html">享元模式</a>和<a href="observer.html">观察者模式</a>）。
+最后，有时候我只是觉得，看看模式是如何融入更广阔的编程领域的，很有趣（<a href="prototype.html">原型模式</a>和<a href="state.html">状态模式</a>）。</p>
+<h2><a href="#模式" name="模式">模式</a></h2>
+<ul>
+<li><a href="command.html">命令模式</a></li>
+<li><a href="flyweight.html">享元模式</a></li>
+<li><a href="observer.html">观察者模式</a></li>
+<li><a href="prototype.html">原型模式</a></li>
+<li><a href="singleton.html">单例模式</a></li>
+<li><a href="state.html">状态模式</a></li>
+</ul>
+<nav>
+  <span class="prev">&larr; <a href="architecture-performance-and-games.html">上一章</a></span>
+  <span class="next"><a href="command.html">下一章</a> &rarr;</span>
+  <span class="toc">&equiv; <a href="/">首页</a></span>
+</nav>
+</div>
+</div>
+<footer>&copy; 2009-2015 Robert Nystrom</footer>
+</body>
+</html>
